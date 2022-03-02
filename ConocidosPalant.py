@@ -7,7 +7,20 @@ from collections import namedtuple
 
 text=''
 
-with pdfplumber.open('Dic2020.pdf') as pdf:
+#Devuelve una copia del String que recibe sin los substrings entre parentesis (Bug codigo de barra)
+def remove_nested_parens(input_str):
+    result = ''
+    paren_level = 0
+    for ch in input_str:
+        if ch == '(':
+            paren_level += 1
+        elif (ch == ')') and paren_level:
+            paren_level -= 1
+        elif not paren_level:
+            result += ch
+    return result
+
+with pdfplumber.open('*.pdf') as pdf:
     for page in pdf.pages:
         text += page.extract_text()
         
@@ -33,21 +46,28 @@ for line in text.split('\n'):
         
         #Eliminamos los puntos
         registro_total = registro_total.replace('.','')
-        print(registro_total)
         #Cambiamos coma decimal por punto decimal y parse float
-        registro_total = float(registro_total.replace(',','.'))
+        registro_total = registro_total.replace(',','.')
+        
+        
+        
+
+        registro_total = float(remove_nested_parens(registro_total))
+        
+        
+        print(registro_total)
         
           
         if registro_total < total_actual:
             debito.append(registro_importe)
             nuevo_registro = {'Debito':registro_importe, 'Credito':'', "Total":registro_total}
             df = df.append(nuevo_registro, ignore_index = True)
-            #print('Débito: ' + registro_importe)
+            print('Débito: ' + registro_importe)
         else:
             credito.append(registro_importe)
             nuevo_registro = {'Debito':'', 'Credito':registro_importe , "Total":registro_total}
             df = df.append(nuevo_registro, ignore_index = True)
-            #print('Crédito: ' + registro_importe)
+            print('Crédito: ' + registro_importe)
             
         total_actual = registro_total
         
@@ -55,4 +75,4 @@ for line in text.split('\n'):
 
 #print(debito, credito)
 print(df)
-df.to_csv('Final.csv')
+df.to_csv('Output.csv')
