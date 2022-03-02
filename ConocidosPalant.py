@@ -5,7 +5,21 @@ import pdfplumber
 import pandas as pd
 from collections import namedtuple
 
+print(" _____                        _     _           ")
+print("/  __ \                      (_)   | |          ")
+print("| /  \/ ___  _ __   ___   ___ _  __| | ___  ___ ")
+print("| |    / _ \| '_ \ / _ \ / __| |/ _` |/ _ \/ __|")
+print("| \__/\ (_) | | | | (_) | (__| | (_| | (_) \__ \ ")
+print(" \____/\___/|_| |_|\___/ \___|_|\__,_|\___/|___/")
+print("")
+print("Bank Statement Information Extraction Software by LkN y Devil")
+print("")
+
 text=''
+print("1.Copie el archivo PDF a la carpeta del programa")
+print("2.El programa generara un archivo 'Output.csv' (Importante: El nuevo archivo reemplazara uno generado anteriormente)")
+valinput = input("3.Ingrese el nombre del archivo PDF: ")
+
 
 #Devuelve una copia del String que recibe sin los substrings entre parentesis (Bug codigo de barra)
 def remove_nested_parens(input_str):
@@ -20,7 +34,7 @@ def remove_nested_parens(input_str):
             result += ch
     return result
 
-with pdfplumber.open('*.pdf') as pdf:
+with pdfplumber.open(valinput + '.pdf') as pdf:
     for page in pdf.pages:
         text += page.extract_text()
         
