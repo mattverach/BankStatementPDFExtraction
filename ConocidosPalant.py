@@ -12,7 +12,7 @@ print("| |    / _ \| '_ \ / _ \ / __| |/ _` |/ _ \/ __|")
 print("| \__/\ (_) | | | | (_) | (__| | (_| | (_) \__ \ ")
 print(" \____/\___/|_| |_|\___/ \___|_|\__,_|\___/|___/")
 print("")
-print("Bank Statement Information Extraction Software by LkN y Devil")
+print("Bank Statement Information Extraction Software by LkN & Devil")
 print("")
 
 text=''
